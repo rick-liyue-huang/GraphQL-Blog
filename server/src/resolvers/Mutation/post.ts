@@ -1,8 +1,6 @@
-
-import {Post} from '.prisma/client'
-import {Context} from "../index";
+import {Context} from "../../index";
 import {Prisma} from "@prisma/client";
-import {assertWrappingType} from "graphql";
+import {Post} from '.prisma/client'
 
 export interface PostArgs {
 	post: {
@@ -11,12 +9,12 @@ export interface PostArgs {
 	}
 }
 
-interface PostPayloadType {
+export interface PostPayloadType {
 	userErrors: {message: string}[],
 	post: Post | Prisma.Prisma__PostClient<Post> | null
 }
 
-export const Mutation = {
+export const postResolvers = {
 	postCreate: async (prent: any, {post}: PostArgs, {prisma}: Context): Promise<PostPayloadType> => {
 		const {title, content} = post;
 		if (!title || !content) {
@@ -108,5 +106,5 @@ export const Mutation = {
 				}
 			})
 		}
-	}
+	},
 }
